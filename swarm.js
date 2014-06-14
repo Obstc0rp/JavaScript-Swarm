@@ -11,7 +11,7 @@ document.onreadystatechange = function(){
 		var boids = [];
 		window.onresize = function(){
 			//no resize yet
-			//resize(boids);
+			resize(boids);
 		}
 
 		for(var i = 0; i < SchwarmConstants.NUMBER_OF_BOIDS; i++){
@@ -88,8 +88,8 @@ function resize(boids){
 	SchwarmConstants.MAX_X = window.innerWidth;
 	SchwarmConstants.MAX_Y = window.innerHeight;
 
-	var deltaX = oldX / 100 * SchwarmConstants.MAX_X / 100;
-	var deltaY = oldY / 100 * SchwarmConstants.MAX_Y / 100;
+	var deltaX = SchwarmConstants.MAX_X / oldX;
+	var deltaY = SchwarmConstants.MAX_Y / oldY;
 
 	console.log(oldX + ' : ' + oldY);
 	console.log(SchwarmConstants.MAX_X + ' : ' + SchwarmConstants.MAX_Y);
@@ -97,15 +97,10 @@ function resize(boids){
 	console.log(deltaY);
 
 	for(var i = 0; i < boids.length; i++){
-		if(oldX > SchwarmConstants.MAX_X)
-			boids[i].positionX -= deltaX;
-		else
-			boids[i].positionX += deltaX;
 
-		if(oldY > SchwarmConstants.MAX_Y)
-			boids[i].positionY -= deltaY;
-		else
-			boids[i].positionY += deltaY;
-		
+		boids[i].positionX *= deltaX;
+		boids[i].positionY *= deltaY;
+
+		//TODO: SchwarmConstants factors
 	}
 }
